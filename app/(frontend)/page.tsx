@@ -15,7 +15,7 @@ type Tool = {
 };
 
 const TEMPLATE_NAME = "Blog Starter Template";
-const INSPIRATION_URL = "https://apnatva.vercel.app";
+const INSPIRATION_URL = "https://apnatva.vercel.app/visual";
 
 const TEMPLATE_PRIMARY_CTA = {
   label: "Template",
@@ -141,23 +141,6 @@ export default function TemplateLandingPage() {
               </Link>
             </Button>
           </div>
-
-          <p
-            data-hero
-            className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            Database flexibility is built in: use{" "}
-            <span className="font-medium text-foreground">Postgres</span>,{" "}
-            <span className="font-medium text-foreground">MongoDB</span>, or{" "}
-            <span className="font-medium text-foreground">SQLite</span> by
-            switching a single connection string. Containerization support is
-            included with Docker + Compose, plus an Nginx reverse proxy starter
-            config. You ccan use the docker self-hosted DB solution or a managed
-            DB service. Additionally you can attach an{" "}
-            <span className="font-medium text-foreground">S3</span> storage for
-            media files.
-          </p>
-        </div>
 
         <div className="w-full max-w-xl">
           <div
