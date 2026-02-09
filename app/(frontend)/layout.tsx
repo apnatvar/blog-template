@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     siteName: "Blog Template by Apnatva",
     images: [
       {
-        url: "/ap-icon.svg",
+        url: "/ap-icon.png",
         width: 1200,
         height: 630,
         alt: "Blog Template Preview",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "Blog Template — Portfolio + Blog Starter",
     description:
       "Next.js App Router + PayloadCMS starter with SQLite, MongoDB, PostgreSQL, and Docker support.",
-    images: ["/ap-icon.svg"],
+    images: ["/ap-icon.png"],
   },
   icons: {
     icon: "/ap-icon.svg",
