@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
-import { getPayloadClient } from "@/lib/payloadClient";
 import RenderBlogPage from "@/components/blog/renderBlog";
+import { getPayloadClient } from "@/lib/payloadClient";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -9,9 +9,10 @@ type PageProps = {
 };
 
 export default async function Blog({ params }: PageProps) {
-  console.log("does not reach");
+  if (process.env.NODE_ENV === "production") {
+    return notFound();
+  }
   const { blogSlug } = await params;
-  console.log(blogSlug);
 
   if (!blogSlug) return notFound();
 
@@ -28,9 +29,7 @@ export default async function Blog({ params }: PageProps) {
   });
 
   const blog = blogRes.docs?.[0];
-  console.log(blog);
   if (!blog) return notFound();
-  console.log(blog);
   return (
     <>
       <RenderBlogPage {...blog} />
