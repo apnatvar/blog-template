@@ -141,6 +141,7 @@ export default function TemplateLandingPage() {
               </Link>
             </Button>
           </div>
+        </div>
 
         <div className="w-full max-w-xl">
           <div
