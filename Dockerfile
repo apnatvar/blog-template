@@ -1,30 +1,41 @@
-# syntax=docker/dockerfile:1.7
+FROM node:24-alpine AS base
 
-FROM node:20-bookworm-slim AS deps
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install dependencies (with lockfile)
 COPY package.json package-lock.json* ./
+RUN npm ci
 
-RUN corepack enable 
-RUN npm i --legacy-peer-deps
-
-FROM node:20-bookworm-slim AS builder
+FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_TELEMETRY_DISABLED 1
+ARG SKIP_DB_DURING_BUILD=1
 RUN npm run build
 
-FROM node:20-bookworm-slim AS runner
+FROM base AS runner
 WORKDIR /app
-ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
+
+ENV NODE_ENV production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 
 EXPOSE 3000
-CMD ["node", "server.js"]
+
+ENV PORT 3000
+
+CMD HOSTNAME="0.0.0.0" node server.js

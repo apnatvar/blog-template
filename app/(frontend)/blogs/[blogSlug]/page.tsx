@@ -9,9 +9,6 @@ type PageProps = {
 };
 
 export default async function Blog({ params }: PageProps) {
-  if (process.env.NODE_ENV === "production") {
-    return notFound();
-  }
   const { blogSlug } = await params;
 
   if (!blogSlug) return notFound();

@@ -1,15 +1,10 @@
 import { Blog } from "@/app/(payload)/payload-types";
 import { getPayloadClient } from "@/lib/payloadClient";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 100;
 
 export default async function BlogIndexPage() {
-  if (process.env.NODE_ENV === "production") {
-    return notFound();
-  }
   const payload = await getPayloadClient();
 
   const blogsRes = await payload.find({
@@ -21,7 +16,6 @@ export default async function BlogIndexPage() {
   });
 
   const blogs = (blogsRes.docs ?? []) as unknown as Blog[];
-  console.log(blogs);
   return (
     <>
       <section className="w-full bg-background text-foreground">
